@@ -1,0 +1,352 @@
+.navbar {
+    position: sticky;
+    top: 0;
+    color: white;
+    background-color: black;
+    z-index: 1;
+    text-transform: uppercase;
+    border-bottom: 5px solid white;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+    height: 120px;
+}
+
+body {
+    background-color: black;
+}
+
+
+.navlink {
+    display: flex;
+    gap: 30px;
+
+}
+
+.navlink a {
+
+    color: white;
+    text-decoration: none;
+    font-family: "pepsi";
+    top: 0;
+    margin-left: 50px;
+}
+
+.logo img {
+    width: 80px;
+    height: 80px;
+    margin-left: 20px;
+}
+
+.bgimage {
+    height: 88vh;
+    width: 100%;
+    background-image: url('./images/pepsi..jpg');
+    background-size: 100%;
+    background-position: 0px;
+    background-repeat: no-repeat;
+    display: flex;
+    line-height: 0px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+
+.font h3 {
+    font-family: "pepsi";
+    line-height: 0%;
+    font-size: 90px;
+    text-transform: uppercase;
+    color: white;
+    text-align: left;
+    margin-left: 80px;
+    display: flex;
+    margin-bottom: 100px;
+
+}
+
+@font-face {
+    font-family: "pepsi";
+    src: url(./fonts/PepsiOwners-Regular.ttf), url(./fonts/PepsiOwners-Extended.otf), url(./fonts/PepsiOwners-Extended.woff2);
+}
+
+.font p {
+    color: white;
+    margin-left: 80px;
+    font-family: sans-serif;
+    font-size: 18px;
+    display: flex;
+    margin-bottom: 150px;
+}
+
+video {
+    display: block;
+    margin: auto;
+    width: 900px;
+    height: 550px;
+
+}
+
+.secondhead {
+
+    margin-top: 0px;
+    text-align: center;
+    font-family: "pepsi";
+    line-height: 0%;
+    font-size: 70px;
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 0px;
+    text-align: center;
+    margin-left: 80px;
+    margin-top: 80px;
+    margin-right: 80px;
+    padding: 0px;
+    box-sizing: border-box;
+
+}
+
+.slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 90px;
+    position: relative;
+}
+
+.viewport {
+    overflow: hidden;
+}
+
+.track {
+    display: flex;
+
+}
+
+.track img {
+    width: 400px;
+    height: auto;
+}
+
+
+.arrow {
+    background: rgb(12, 23, 218);
+    color: white;
+    border: none;
+    font-size: 20px;
+    padding: 20px;
+    cursor: pointer;
+    border-radius: 25px 25px 25px 25px;
+    margin: 50px;
+}
+
+
+.arrow:hover,
+button:hover {
+    color: rgb(1, 1, 46);
+    background-color: #7fa4ff;
+}
+
+
+
+.card_title {
+
+    margin-top: 35px;
+    font-family: "pepsi";
+    line-height: 40px;
+    font-size: 30px;
+    text-transform: uppercase;
+    color: white;
+    text-align: center;
+    padding: 10px;
+
+
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    max-height: 900px;
+
+}
+
+button {
+    background-color: blue;
+    font-family: 'pepsi';
+    color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 40px;
+    padding-left: 40px;
+    font-size: 20px;
+    border-radius: 50px;
+    margin-top: 30px;
+    border: black;
+
+}
+
+
+
+.animation {
+
+
+    margin-left: 650px;
+    margin-top: 150px;
+}
+
+.firstline {
+    margin-top: 0px;
+    font-family: "pepsi";
+    line-height: 0%;
+    font-size: 55px;
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 0px;
+    margin-left: 80px;
+    margin-top: 80px;
+    margin-right: 80px;
+    padding: 0px;
+    font-weight: bold;
+
+}
+
+.secondline {
+
+    margin-top: 0px;
+    font-family: "pepsi";
+    line-height: 0%;
+    font-size: 100px;
+    text-transform: uppercase;
+    color: blue;
+    margin-bottom: 0px;
+    margin-left: 80px;
+    margin-top: 80px;
+    margin-right: 80px;
+    padding: 0px;
+
+}
+
+.headers {
+    text-align: center;
+    margin: 0px;
+
+}
+
+.endimages {
+    overflow: hidden;
+    flex-direction: row;
+    display: flex;
+    position: relative;
+
+}
+
+.endimages img {
+
+    height: 440px;
+    width: 450px;
+    border-radius: 8px;
+    display: flex;
+    margin-top: 10px;
+    margin-right: 40px;
+    margin-bottom: 150px;
+}
+
+.endview {
+    border-bottom: 3px solid white;
+}
+
+.footerimg img {
+
+    height: 75px;
+    margin-top: 40px;
+
+}
+
+.footersection {
+
+    width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-left: 30px;
+
+}
+
+.footertop {
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    position: relative;
+    margin-left: 30px;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+
+.footerlinks {
+
+    position: absolute;
+    left: 50%;
+    display: flex;
+    gap: 60px;
+    margin-top: 20px;
+}
+
+
+.footerlogos,
+.footerlogos a {
+
+    text-decoration: none;
+    color: white;
+    display: flex;
+    gap: 25px;
+    font-size: 25px;
+}
+
+.footer {
+    padding-bottom: 40px;
+    border-bottom: 0.1px solid rgba(255, 255, 255, 0.2)
+}
+
+
+.footerlink1 a,
+.footerlink2 a,
+.footerlink3 a {
+
+    font-family: sans-serif;
+    color: white;
+    padding-right: 2px;
+    padding-left: 2px;
+    font-size: 15px;
+    border: black;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footerlink1 a:hover,
+.footerlink2 a:hover,
+.footerlink3 a:hover {
+    text-decoration: underline;
+    color: white;
+}
+
+p {
+    font-family: sans-serif;
+    color: white;
+    padding-right: 2px;
+    padding-left: 2px;
+    margin-top: 40px;
+    font-size: 15px;
+    text-align: center;
+    padding-bottom: 50px;
+}
