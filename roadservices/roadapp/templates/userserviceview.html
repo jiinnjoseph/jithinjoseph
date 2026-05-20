@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>user-view</title>
+</head>
+
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>fuel-view</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    </head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blue: #3a6ee8;
+            --blue-light: #eef1f8;
+            --blue-circle: #d8e1f5;
+            --panel-bg: #5d6b8a;
+            --white: #ffffff;
+            --text-dark: #2d3748;
+            --text-muted: #8a94ab;
+            --text-lighter: #a0aec0;
+            --border: #dde2ef;
+            --radius-sm: 14px;
+            --radius-md: 14px;
+            --radius-lg: 14px;
+            --sidebar-width: 250px;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #5a6170;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 40px 20px;
+            overflow-y: hidden;
+            overflow-x: hidden;
+        }
+
+        .dasboard-container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--blue-light);
+            top: 0;
+            left: 0;
+            bottom: 0;
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            padding: 32px 24px;
+            z-index: 10;
+            overflow: hidden;
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: -70px;
+            left: -70px;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: var(--blue-circle);
+            pointer-events: none;
+        }
+
+        .sidebar::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            right: -60px;
+            width: 210px;
+            height: 210px;
+            border-radius: 50%;
+            background: var(--blue-circle);
+            pointer-events: none;
+        }
+
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
+            margin-top: 10px;
+
+        }
+
+        .logo i {
+            font-size: 22px;
+            color: var(--blue);
+            font-size: 30px;
+        }
+
+        .logo h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--blue);
+            letter-spacing: -0.5px;
+            font-size: 30px;
+        }
+
+
+        .sidebar p {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            color: var(--panel-bg);
+            margin: 0;
+            font-size: 14px;
+            margin-top: 9px;
+        }
+
+        .dashboard-tabs {
+
+            padding: 10px;
+            border-radius: 14px 12px;
+            position: relative;
+            margin-bottom: 28px;
+            line-height: 35px;
+            margin-top: 80px;
+            margin-left: 15px;
+            gap: 10px;
+            box-shadow: 0px 10px 30px rgb(32, 32, 32);
+
+        }
+
+        h3 i {
+            margin-right: 13px;
+        }
+
+        .dashboard-tabs h3 {
+            background-color: rgb(147, 19, 162);
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--text-dark);
+            letter-spacing: 0.8px;
+            padding: 0 4px;
+            cursor: default;
+            margin-right: 3px;
+            transition: 0.3s;
+        }
+
+
+        .dashboard-tabs i {
+            margin-left: 3px;
+        }
+
+        .dashboard-tabs button {
+            border: none;
+            transition: 0.3s;
+            background-color: transparent;
+            font-family: 'Inter', sans-serif;
+        }
+
+
+        .dashboard-tabs h3:hover {
+
+            background-color: white;
+            padding: 10px 10px;
+            color: #3a6ee8;
+            border-radius: 18px 18px;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(58, 110, 232, 0.15);
+
+        }
+
+        .dashboard-menu {
+            display: none;
+            flex-direction: column;
+            margin-top: 50px;
+            animation: slideDown 0.3s ease;
+
+
+        }
+
+        .dashboard-menu.show {
+            display: flex;
+        }
+
+        .dashboard-toggle {
+            cursor: pointer;
+            margin-top: 50px;
+        }
+
+        .dashboard-toggle h3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-dark);
+        }
+
+        .dashboard-menu button {
+            width: 100%;
+            padding: 6px;
+            margin: 5px 0;
+            border: blue;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            color: var(--text-dark);
+            background-color: #ccdff7;
+        }
+
+        .dashboard-menu button:hover {
+            transform: translateX(5px);
+            color: #3a6ee8;
+            background-color: white;
+        }
+
+        .arrow {
+            transition: 0.3s;
+        }
+
+        .arrow.rotate {
+            transform: rotate(180deg);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .left-bottom {
+            position: absolute;
+            z-index: 1;
+            margin-bottom: 100px;
+        }
+
+        .card-title h3 {
+            font-size: 35px;
+            color: #2d73f4;
+            margin-top: 3px;
+            text-align: center;
+            padding-bottom: 30px;
+
+        }
+
+        .left-bottom p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+        }
+
+        .home-btn {
+            display: flex;
+            gap: 8px;
+            padding: 14px 14px;
+            background:var(--text-lighter);
+            border: 1.5px solid var(--border);
+            border-radius: 20px;
+            font-size: 13px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 60%;
+            margin-top: 550px;
+            position: relative;
+            z-index: 1;
+            transition: 0.3s;
+            text-decoration: none;
+            align-items: center;
+            margin-left: 40px;
+        }
+
+        .home-btn i {
+            padding-left: 40px;
+            font-size: 13px;
+        }
+
+        .home-btn:hover {
+            background-color: var(--blue);
+            color: white;
+            transform: translateY(-6px);
+        }
+
+        .card {
+            margin-left: 300px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+            padding: 12px 12px;
+            width: 95%;
+            margin-top: 80px;
+            max-width: 1100px;
+        }
+
+        h2 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #082eb4;
+            margin-bottom: 24px;
+            text-align: center;
+            letter-spacing: -0.3px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        thead tr {
+            background-color: #f0f3ff;
+        }
+
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #3B5BDB;
+            border-bottom: 2px solid #d0d8f5;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 12px 16px;
+            color: #333;
+            border-bottom: 1px solid #eef0f7;
+            vertical-align: middle;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover td {
+            background-color: #f5f7ff;
+        }
+
+        .id-cell {
+            font-family: monospace;
+            font-size: 13px;
+            color: #888;
+        }
+
+        .qty {
+            font-weight: 600;
+            color: #333;
+        }
+
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            flex-shrink: 0;
+        }
+
+        .badge-pending {
+            background: #FAEEDA;
+            color: #f40707;
+        }
+
+        .badge-approved {
+            background: #EAF3DE;
+            color: #08812c;
+        }
+
+        .badge-delivered {
+            background: #E6F1FB;
+            color: #1075da;
+        }
+
+        .badge-cancelled {
+            background: #FCEBEB;
+            color: #A32D2D;
+        }
+    </style>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("dashboardMenu");
+            const arrow = document.querySelector(".arrow");
+
+            menu.classList.toggle("show");
+            arrow.classList.toggle("rotate");
+        }
+    </script>
+
+    <body>
+        <div class="dashboard-container">
+            <div class="sidebar">
+                <div class="logo">
+                    <i class="fa-solid fa-road"></i>
+                    <h1>RoadAssist</h1>
+                </div>
+                <p>Emergency fuel & roadside assistance</p>
+                <div class="dashboard-labs">
+
+                    <div class="dashboard-toggle" onclick="toggleMenu()">
+                        <h3>
+                            <i class="fa-solid fa-bars"></i> Dashboard
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </h3>
+                    </div>
+                    <div class="dashboard-menu" id="dashboardMenu">
+
+                        <a href="/roadapp/fuelregister/">
+                            <button>
+                                <h3><i class="fa-solid fa-gas-pump"></i> Emergency Fuel</h3>
+                            </button>
+                        </a>
+                        <a href="/roadapp/servicerequest/">
+                            <button>
+                                <h3><i class="fa-solid fa-wrench"></i> Services</h3>
+                            </button>
+                        </a>
+                        <a href="/roadapp/custom_fuelview/">
+                            <button>
+                                <h3><i class="fa-solid fa-droplet"></i> Fuel Requests</h3>
+                            </button>
+                        </a>
+                        <a href="/roadapp/custom_serviceview/">
+                            <button>
+                                <h3><i class="fa-solid fa-clipboard-list"></i> Services History</h3>
+                            </button>
+                        </a>
+                    </div>
+                    <a href="/roadapp/user-page/" class="home-btn"><i class="fa-solid fa-house"></i>Home</a>
+                </div>
+            </div>
+            <div class="card">
+                <h2>Service Details</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Customer Name</th>
+                            <th>Vehicle Type </th>
+                            <th>Vehicle Images</th>
+                            <th>Location</th>
+                            <th> Issue </th>
+                            <th> Description </th>
+                            <th>Request Status</th>
+                            <th>Created at</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in x %}
+                        <tr>
+                            <td class="id-cell">{{ i.id }}</td>
+                            <td>{{ i.customer_name }}</td>
+                            <td>{{ i.vehicle }} </td>
+                            <td>{{ i.images.url }} </td>
+                            <td>{{ i.location }}</td>
+                            <td>{{ i.issue }}</td>
+                            <td>{{ i.Description }}</td>
+                            <td>
+                                {% if i.status == 'pending' %}
+                                <span class=" badge badge-pending"><span class="dot"></span>{{ i.status }}</span>
+                                {% elif i.status == 'completed' %}
+                                <span class="badge badge-approved"><span class="dot"></span>{{ i.status }}</span>
+                                {% elif i.status == 'in progress' %}
+                                <span class="badge badge-delivered"><span class="dot"></span>{{ i.status }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ i.created_at }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <script>
+                document.querySelectorAll('.menu-btn').forEach(btn => {
+                    btn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const targetId = this.dataset.target;
+                        const submenu = document.getElementById(targetId);
+                        const isOpen = submenu.classList.contains('open');
+
+                        document.querySelectorAll('.submenu').forEach(s => s.classList.remove('open'));
+                        document.querySelectorAll('.menu-btn').forEach(b => {
+                            b.classList.remove('active', 'open');
+                            b.querySelector('i.fa-angle-right').style.transform = '';
+                        });
+
+                        if (!isOpen) {
+                            submenu.classList.add('open');
+                            this.classList.add('active', 'open');
+                        }
+                    });
+                });
+
+                function toggleCard(id) {
+                    const card = document.getElementById(id);
+                    card.classList.toggle('open');
+                }
+            </script>
+    </body>
+
+    </html>

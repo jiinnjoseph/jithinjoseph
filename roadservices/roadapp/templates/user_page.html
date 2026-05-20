@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoadAssist — Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    :root {
+        --blue: #3a6ee8;
+        --blue-light: #eef1f8;
+        --blue-circle: #d8e1f5;
+        --panel-bg: #5d6b8a;
+        --white: #ffffff;
+        --text-dark: #58595b;
+        --text-muted: #797e8a;
+        --text-lighter: #a0aec0;
+        --border: #dde2ef;
+        --radius-sm: 14px;
+        --radius-md: 12px;
+        --radius-lg: 14px;
+        --sidebar-width: 260px;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: var(--blue-light);
+        color: var(--text-dark);
+        min-height: 100vh;
+        display: flex;
+        width: 70%;
+        overflow-x: hidden;
+    }
+
+
+    .dasboard-container {
+
+        display: flex;
+        width: 100%;
+        min-height: 100vh;
+
+    }
+
+    .sidebar {
+        width: var(--sidebar-width);
+        background: var(--blue-light);
+        top: 0;
+        left: 0;
+        bottom: 0;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        padding: 32px 24px;
+        z-index: 10;
+        overflow: hidden;
+        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+
+    .sidebar::before {
+        content: '';
+        position: absolute;
+        top: -70px;
+        left: -70px;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: var(--blue-circle);
+        pointer-events: none;
+    }
+
+    .sidebar::after {
+        content: '';
+        position: absolute;
+        bottom: -80px;
+        right: -60px;
+        width: 210px;
+        height: 210px;
+        border-radius: 50%;
+        background: var(--blue-circle);
+        pointer-events: none;
+    }
+
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 6px;
+        position: relative;
+        z-index: 1;
+        margin-top: 10px;
+
+    }
+
+    .logo i {
+        font-size: 22px;
+        color: var(--blue);
+        font-size: 30px;
+    }
+
+    .logo h1 {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--blue);
+        letter-spacing: -0.5px;
+        font-size: 30px;
+    }
+
+
+    .sidebar p {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        color: var(--panel-bg);
+        margin: 0;
+        font-size: 14px;
+        margin-top: 9px;
+    }
+
+    .dashboard-tabs {
+        
+        padding: 10px;
+        border-radius: 14px 12px;
+        position: relative;
+        margin-bottom: 28px;
+        line-height: 35px;
+        margin-top: 80px;
+        margin-left: 15px;
+        gap: 10px;
+        box-shadow: 0px 10px 30px rgb(32, 32, 32);
+
+    }
+
+    h3 i {
+        margin-right: 13px;
+    }
+
+    .dashboard-tabs h3 {
+        background-color: rgb(147, 19, 162);
+        font-size: 14px;
+        font-weight: bold;
+        color: var(--text-dark);
+        letter-spacing: 0.8px;
+        padding: 0 4px;
+        cursor: default;
+        margin-right: 3px;
+        transition: 0.3s;
+    }
+
+
+    .dashboard-tabs i {
+        margin-left: 3px;
+    }
+
+    .dashboard-tabs button {
+        border: none;
+        transition: 0.3s;
+        background-color: transparent;
+        font-family: 'Inter', sans-serif;
+    }
+
+
+    .dashboard-tabs h3:hover {
+
+        background-color: white;
+        padding: 10px 10px;
+        color: #3a6ee8;
+        border-radius: 18px 18px;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(58, 110, 232, 0.15);
+
+    }
+
+    .dashboard-menu {
+        display: none;
+        flex-direction: column;
+        margin-top: 50px;
+        animation: slideDown 0.3s ease;
+
+
+    }
+
+    .dashboard-menu.show {
+        display: flex;
+    }
+
+    .dashboard-toggle {
+        cursor: pointer;
+        margin-top: 50px;
+    }
+
+    .dashboard-toggle h3 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--text-dark);
+    }
+
+    .dashboard-menu button {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        border:blue;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+        color: var(--text-dark);
+        background-color: #ccdff7;
+    }
+
+    .dashboard-menu button:hover {
+        transform: translateX(5px);
+        color: #3a6ee8;
+        background-color: white;
+    }
+
+    .arrow {
+        transition: 0.3s;
+    }
+
+    .arrow.rotate {
+        transform: rotate(180deg);
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .logout-btn {
+        display: flex;
+        gap: 8px;
+        padding: 10px 12px;
+        background: #5D6B8A;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+        color: #c8ccd8;
+        font-family: 'Inter', sans-serif;
+        cursor: pointer;
+        transition: 0.3s;
+        width: 60%;
+        margin-top: 600px;
+        position: relative;
+        z-index: 1;
+        text-decoration: none;
+        align-items: center;
+        margin-left: 40px;
+        transition: 0.3s;
+    }
+
+    .logout-btn i {
+        padding-left: 20px;
+        font-size: 13px;
+
+    }
+
+    .logout-btn:hover {
+        background-color: red;
+        color: white;
+        transform: translateY(-6px);
+    }
+
+    .main-content {
+        padding-left: 50px;
+        padding-right: 0px;
+        padding-top: 60px;
+        margin-left: var(--sidebar-width);
+        min-height: 100vh;
+        background: var(--panel-bg);
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        width: 160%;
+    }
+
+
+    .topbar {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    .topbar-left h2 {
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--white);
+        letter-spacing: -0.4px;
+        line-height: 1.2;
+        margin-left: 5px;
+    }
+
+    .topbar-left p {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.5);
+        margin-top: 3px;
+    }
+
+    .topbar-badge {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--panel-bg);
+        background: var(--white);
+        padding: 6px 14px;
+        border-radius: 100px;
+        margin-top: 4px;
+        margin-right: 90px;
+    }
+
+    .dot {
+        width: 7px;
+        height: 7px;
+        background: #48bb78;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.4;
+        }
+    }
+
+
+
+    .welcome-card {
+        background: rgba(255, 255, 255, 0.1);
+        border: 0.5px solid rgba(255, 255, 255, 0.15);
+        border-radius: var(--radius-lg);
+        padding: 24px 28px;
+        width: 80%;
+        align-items: center;
+    }
+
+    .card-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 10.5px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.1);
+        border: 0.5px solid rgba(255, 255, 255, 0.15);
+        padding: 5px 10px;
+        border-radius: 100px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+
+    .card-badge i {
+        font-size: 10px;
+    }
+
+    .welcome-card h2 {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--white);
+        margin-bottom: 8px;
+        letter-spacing: -0.3px;
+    }
+
+    .welcome-card p {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.5);
+        line-height: 1.65;
+
+    }
+
+
+    .fields-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 80%;
+        overflow: hidden;
+        transition: 0.3;
+    }
+
+
+    .field-card {
+        background: var(--white);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+    }
+
+    .field-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .field-card-header-left {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+    }
+
+    .field-icon {
+        width: 36px;
+        height: 36px;
+        background: var(--blue-light);
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--blue);
+        font-size: 14px;
+        flex-shrink: 0;
+    }
+
+    .field-card-header h3 {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 2px;
+    }
+
+
+    .field-grid:hover {
+        background-color: #8a94ab;
+        transform: translateY(-6px);
+    }
+
+    .field-card-header span {
+        font-size: 12px;
+        color: var(--text-lighter);
+    }
+
+    .field-card-toggle i {
+        font-size: 11px;
+        color: var(--text-lighter);
+        transition: transform 0.25s ease;
+    }
+
+    .field-card.open .field-card-toggle i {
+        transform: rotate(180deg);
+    }
+
+    .subfields {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    .field-card.open .subfields {
+        max-height: 300px;
+    }
+
+    .subfield-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 20px 12px 69px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background 0.12s;
+    }
+
+    .subfield-row:hover {
+        background: #d5ddf7;
+        color: white;
+    }
+
+    .subfield-icon {
+        width: 28px;
+        height: 28px;
+        background: var(--blue-light);
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: var(--blue);
+        flex-shrink: 0;
+    }
+
+    .subfield-text strong {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 1px;
+    }
+
+    .subfield-text small {
+        font-size: 11.5px;
+        color: var(--text-lighter);
+    }
+
+    .subfield-arrow {
+        margin-left: auto;
+        font-size: 11px;
+        color: #c8ccd8;
+    }
+
+    .subfield-divider {
+        height: 0.5px;
+        background: #edf0f7;
+        margin: 0 20px 0 69px;
+    }
+
+
+
+    .field-card-simple {
+        background: var(--blue);
+        border-radius: var(--radius-md);
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: opacity 0.15s;
+    }
+
+    .field-card-simple:hover {
+        opacity: 0.93;
+    }
+
+    .field-card-simple-left {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+    }
+
+    .field-card-simple .field-icon {
+        background: rgba(255, 255, 255, 0.15);
+        color: var(--white);
+    }
+
+    .field-card-simple h3 {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--white);
+        margin-bottom: 2px;
+    }
+
+    .field-card-simple span {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .field-card-simple-action {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 9px 18px;
+        background: var(--white);
+        border: none;
+        border-radius: var(--radius-sm);
+        color: var(--blue);
+        font-size: 13px;
+        font-weight: 700;
+        font-family: 'Inter', sans-serif;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: opacity 0.15s;
+    }
+
+    .field-card-simple-action:hover {
+        opacity: 0.88;
+    }
+
+    .field-card-simple-action i {
+        font-size: 12px;
+    }
+
+    .alert {
+        padding: 14px 20px;
+        margin-left: 100px;
+        margin-right: 50px;
+        padding-left: 10px;
+        padding-right: 80px;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 500;
+        border-left: 5px solid;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        animation: slideIn 0.3s ease forwards;
+    }
+
+
+    .alert.hide {
+        animation: fadeOut 0.4s ease forwards;
+    }
+
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border-left-color: #28a745;
+    }
+
+    .alert-error,
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-left-color: #dc3545;
+    }
+
+    .alert-info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        border-left-color: #17a2b8;
+    }
+
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        to {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+    }
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        document.querySelectorAll('.alert').forEach(alertBox => {
+
+            setTimeout(() => {
+
+                alertBox.classList.add('hide');
+
+                setTimeout(() => {
+                    alertBox.remove();
+                }, 400);
+
+            }, 4000);
+
+        });
+
+    });
+</script>
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById("dashboardMenu");
+        const arrow = document.querySelector(".arrow");
+
+        menu.classList.toggle("show");
+        arrow.classList.toggle("rotate");
+    }
+</script>
+</style>
+
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-road"></i>
+                <h1>RoadAssist</h1>
+            </div>
+            <p>Emergency fuel & roadside assistance</p>
+            <div class="dashboard-labs">
+
+                <div class="dashboard-toggle" onclick="toggleMenu()">
+                    <h3>
+                        <i class="fa-solid fa-bars"></i> Dashboard
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+                    </h3>
+                </div>
+
+
+                <div class="dashboard-menu" id="dashboardMenu">
+
+                    <a href="/roadapp/fuelregister/">
+                        <button>
+                            <h3><i class="fa-solid fa-gas-pump"></i> Emergency Fuel</h3>
+                        </button>
+                    </a>
+
+                    <a href="/roadapp/servicerequest/">
+                        <button>
+                            <h3><i class="fa-solid fa-wrench"></i> Services</h3>
+                        </button>
+                    </a>
+
+                    <a href="/roadapp/custom_fuelview/">
+                        <button>
+                            <h3><i class="fa-solid fa-droplet"></i> Fuel Requests</h3>
+                        </button>
+                    </a>
+
+                    <a href="/roadapp/custom_serviceview/">
+                        <button>
+                            <h3><i class="fa-solid fa-clipboard-list"></i> Services History</h3>
+                        </button>
+                    </a>
+                </div>
+                <a href="http://127.0.0.1:8000/" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i>logout </a>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="topbar">
+                <div class="topbar-left">
+                    <h2>Dashboard</h2>
+                    <p>Welcome back — here's your overview</p>
+                </div>
+                <div class="topbar-badge">
+                    <span class="dot"></span>
+                    24/7 Active
+                </div>
+            </div>
+
+            <div class="welcome-card">
+                <div class="card-badge">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    Always on the road with you
+                </div>
+                <h2>24/7 Emergency Assistance</h2>
+                <p>Fast fuel delivery, towing, battery support and roadside help anytime.</p>
+            </div>
+            <div class="fields-grid">
+
+                <div class="field-card open" id="card-1">
+                    <div class="field-card-header" onclick="toggleCard('card-1')">
+                        <div class="field-card-header-left">
+                            <div class="field-icon">
+                                <i class="fa-solid fa-circle-plus"></i>
+                            </div>
+                            <div>
+                                <h3>Raise New Request</h3>
+                                <span>Start a new emergency or service request</span>
+                            </div>
+                        </div>
+                        <div class="field-card-toggle">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="subfields">
+                        <a href="/roadapp/fuelregister/" class="subfield-row">
+                            <div class="subfield-icon"><i class="fa-solid fa-gas-pump"></i></div>
+                            <div class="subfield-text">
+                                <strong>Emergency Fuel</strong>
+                                <small>Request fuel delivery at your location</small>
+                            </div>
+                            <i class="fa-solid fa-chevron-right subfield-arrow"></i>
+                        </a>
+
+                        <div class="subfield-divider"></div>
+
+                        <a href="/roadapp/servicerequest/" class="subfield-row">
+                            <div class="subfield-icon"><i class="fa-solid fa-wrench"></i></div>
+                            <div class="subfield-text">
+                                <strong>Services</strong>
+                                <small>Towing, battery, tyre &amp; roadside help</small>
+                            </div>
+                            <i class="fa-solid fa-chevron-right subfield-arrow"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="field-card" id="card-2">
+                    <div class="field-card-header" onclick="toggleCard('card-2')">
+                        <div class="field-card-header-left">
+                            <div class="field-icon">
+                                <i class="fa-solid fa-chart-bar"></i>
+                            </div>
+                            <div>
+                                <h3>View Summary</h3>
+                                <span>Track your past requests and history</span>
+                            </div>
+                        </div>
+                        <div class="field-card-toggle">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                    </div>
+
+                    <div class="subfields">
+                        <a href="/roadapp/custom_fuelview/" class="subfield-row">
+                            <div class="subfield-icon"><i class="fa-solid fa-droplet"></i></div>
+                            <div class="subfield-text">
+                                <strong>Fuel Requests</strong>
+                                <small>View all your fuel delivery history</small>
+                            </div>
+                            <i class="fa-solid fa-chevron-right subfield-arrow"></i>
+                        </a>
+                        <div class="subfield-divider"></div>
+                        <a href="/roadapp/custom_serviceview/" class="subfield-row">
+                            <div class="subfield-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+                            <div class="subfield-text">
+                                <strong>Service Requests</strong>
+                                <small>Track towing, battery &amp; repair jobs</small>
+                            </div>
+                            <i class="fa-solid fa-chevron-right subfield-arrow"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="field-card-simple" onclick="window.location='/roadapp/emergency_fuel'">
+                    <div class="field-card-simple-left">
+                        <div class="field-icon">
+                            <i class="fa-solid fa-phone-volume"></i>
+                        </div>
+                        <div>
+                            <h3>Need Immediate Help?</h3>
+                            <span>Tap to raise an emergency request right now</span>
+                        </div>
+                    </div>
+                    <button class="field-card-simple-action">
+                        <i class="fa-solid fa-bolt"></i> Get Help Now
+                    </button>
+                </div>
+                <div class="messages">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.menu-btn').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.dataset.target;
+                const submenu = document.getElementById(targetId);
+                const isOpen = submenu.classList.contains('open');
+
+                document.querySelectorAll('.submenu').forEach(s => s.classList.remove('open'));
+                document.querySelectorAll('.menu-btn').forEach(b => {
+                    b.classList.remove('active', 'open');
+                    b.querySelector('i.fa-angle-right').style.transform = '';
+                });
+
+                if (!isOpen) {
+                    submenu.classList.add('open');
+                    this.classList.add('active', 'open');
+                }
+            });
+        });
+
+        function toggleCard(id) {
+            const card = document.getElementById(id);
+            card.classList.toggle('open');
+        }
+    </script>
+
+</body>
+
+</html>

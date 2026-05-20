@@ -1,0 +1,451 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>user-login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Consolas, sans-serif;
+            background: #f4f7fb;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .login-section {
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fafafa;
+            position: relative;
+            padding-right: 30px;
+        }
+
+        .login-section::before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(37, 99, 235, 0.08);
+            border-radius: 50%;
+            top: -80px;
+            left: -80px;
+        }
+
+        .login-section::after {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: rgba(59, 130, 246, 0.08);
+            border-radius: 50%;
+            bottom: -80px;
+            right: 40px;
+        }
+
+
+
+        .login-box {
+            width: 400px;
+            background: white;
+            padding: 45px;
+            border-radius: 20px;
+            box-shadow: 0px 10px 30px rgb(32, 32, 32);
+            position: relative;
+            z-index: 2;
+        }
+
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            color: #2d73f4;
+            font-size: 38px;
+            margin-bottom: 8px;
+            margin-left: 5px;
+        }
+
+        .logo i {
+            color: #2d73f4;
+            font-size: 33px;
+            margin-bottom: 10px;
+
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 35px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 8px;
+            color: #334155;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        input {
+            padding: 14px;
+            border: 1px solid #dbe2ea;
+            border-radius: 12px;
+            margin-bottom: 22px;
+            font-size: 15px;
+            transition: 0.3s;
+            background: #f8fafc;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2563eb;
+            background: white;
+            box-shadow: 0px 0px 0px 4px rgba(37, 99, 235, 0.12);
+        }
+
+        .btn-login {
+
+            background: #2563eb;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+            margin-right: 50px;
+            margin-left: 50px;
+            margin-bottom: 40px;
+
+        }
+
+        .btn-login:hover {
+            background: #1d4ed8;
+            transform: translateY(-6px);
+        }
+
+
+        .forgot-btn {
+
+            color: #2563eb;
+            font-family: Consolas, sans-serif;
+            font-size: 15px;
+            text-align: right;
+            margin-top: 50px;
+            text-decoration: none;
+            width: fit-content;
+            padding-left: 70px;
+
+        }
+
+        .options-row {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-top: 10px;
+            gap: 20px;
+
+
+        }
+
+        .options-row a {
+
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-btn:hover {
+
+            text-decoration: underline;
+        }
+
+        .remember-btn {
+
+            color: #2563eb;
+            font-family: Consolas, sans-serif;
+            font-size: 15px;
+            text-align: left;
+            text-decoration: none;
+            position: relative;
+
+        }
+
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            color: #94a3b8;
+            position: relative;
+            z-index: 2;
+        }
+
+        .divider::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: #e2e8f0;
+            top: 50%;
+            left: 0;
+        }
+
+        .signup-text {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 15px;
+        }
+
+        .create-btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid #2563eb;
+            color: #2563eb;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+
+        .create-btn:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        .alert {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+
+        .image-section {
+            width: 50%;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 3px;
+            margin-top: 5px;
+            margin-left:27px;
+        }
+
+        .image-section img {
+            border-radius: 20px;
+            box-shadow: 0px 10px 30px rgb(33, 33, 33);
+        }
+
+        .overlay {
+            position: absolute;
+            color: rgb(249, 247, 247);
+            max-width: 500px;
+            margin-left: 25px;
+            margin-bottom:10px;
+        }
+
+        .overlay h2 {
+            font-size: 42px;
+            margin-bottom: 18px;
+        }
+
+        .overlay p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #faf9f9;
+        }
+
+
+        @media(max-width: 900px) {
+
+            .image-section {
+                display: none;
+            }
+
+            .login-section {
+                width: 100%;
+            }
+
+            .login-box {
+                width: 90%;
+            }
+        }
+
+        .alert {
+            margin-left: 15px;
+            margin-right: 15px;
+            padding-left: 10px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            border-left: 5px solid;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            animation: slideIn 0.3s ease forwards;
+        }
+
+
+        .alert.hide {
+            animation: fadeOut 0.2s ease forwards;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-left-color: #28a745;
+        }
+
+        .alert-error,
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left-color: #dc3545;
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border-left-color: #17a2b8;
+        }
+
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            document.querySelectorAll('.alert').forEach(alertBox => {
+
+                setTimeout(() => {
+
+                    alertBox.classList.add('hide');
+
+                    setTimeout(() => {
+                        alertBox.remove();
+                    }, 200);
+
+                }, 2000);
+
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="login-section">
+            <div class="login-box">
+                <div class="logo">
+                    <i class="fa-solid fa-road"></i>
+                    <h1>RoadAssist</h1>
+                </div>
+                <p class="subtitle">
+                    Emergency fuel delivery & roadside assistance
+                </p>
+                <form method="POST">
+                    {% csrf_token %}
+                    <label>Username</label>
+                    <input type="text" name="username" class="form-data" placeholder=" 👤 username">
+
+                    <label>Password</label>
+                    <input type="password" name="password" class='form-data' placeholder="🔐 password">
+                    <button type="submit" class="btn-login">Connect</button>
+                    <div class="option-row">
+                        <a href="#" class="remember-btn">Remember me</a>
+                        <a href="#" class="forgot-btn">Forgot password?</a>
+                    </div>
+                </form>
+                <div class="messages">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+                <p class="signup-text">If you don't have an account ? </p>
+                <a href="/roadapp/signup/" class="create-btn">Create now</a>
+            </div>
+        </div>
+        <div class="image-section">
+            <img src="./media/login_page.jpg" alt="" height="916px" width="850px">
+            <div class="overlay">
+                <h2>24/7 Emergency Assistance</h2>
+                <p> Fast fuel delivery, towing, battery support and roadside help anytime.</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
